@@ -44,6 +44,7 @@ export default function SitesApps() {
       image: './img/barbeariabrasa.png',
       link: 'https://barbearia1.appmodelo.com/',
     },
+
     {
           id: 3,
           title: ' finanças ',
@@ -62,6 +63,25 @@ export default function SitesApps() {
         description: 'Sistema de gestão do BARBERSHOP',
         link: 'https://barbearia2.appmodelo.com/admin/login',
       },
+    },
+    {
+      id: 5,
+      title: 'Barbearia ROYAL, Plataforma Web & Agendamento.',
+      description: 'Desenvolvimento do site oficial e hub digital da Barbearia ROYAL.',
+      image: './img/logoroyal.png',
+      link: 'https://barbearia3.pages.dev',
+      complementaryProject: {
+        title: 'Painel administrativo',
+        description: 'Sistema de gestão do Royal Barber',
+        link: 'https://barbearia3.pages.dev/admin/',
+      },
+      },
+    {
+          id: 6,
+          title: ' Juliano ',
+          description: 'Site para receber propostas de serviços e portfólio do profissional Juliano.',
+          image: './img/logojuliano.jpeg',
+          link: 'https://juliano.appmodelo.com/',
     },
   ];
 
