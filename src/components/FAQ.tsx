@@ -22,7 +22,7 @@ export default function FAQ() {
     },
     {
       question: 'Quanto custa?',
-      answer: 'Cada projeto é único, então o valor varia conforme as funcionalidades. Oferecemos planos a partir de R$ 97/mês com tudo incluso: hospedagem, manutenção, atualizações e suporte. Agende uma conversa para receber um orçamento personalizado.',
+      answer: 'Cada projeto é planejado conforme as necessidades, funcionalidades e metas do seu negócio. O investimento é apresentado em uma proposta personalizada, com escopo, prazos e serviços claramente definidos. Agende uma conversa para receber uma avaliação sem compromisso.',
     },
     {
       question: 'Vocês dão suporte depois que entregar?',

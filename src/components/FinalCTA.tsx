@@ -1,10 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 const ESTADOS_BRASIL = [
-  'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS',
-  'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO',
+  { uf: 'AC', id: 12 }, { uf: 'AL', id: 27 }, { uf: 'AP', id: 16 }, { uf: 'AM', id: 13 },
+  { uf: 'BA', id: 29 }, { uf: 'CE', id: 23 }, { uf: 'DF', id: 53 }, { uf: 'ES', id: 32 },
+  { uf: 'GO', id: 52 }, { uf: 'MA', id: 21 }, { uf: 'MT', id: 51 }, { uf: 'MS', id: 50 },
+  { uf: 'MG', id: 31 }, { uf: 'PA', id: 15 }, { uf: 'PB', id: 25 }, { uf: 'PR', id: 41 },
+  { uf: 'PE', id: 26 }, { uf: 'PI', id: 22 }, { uf: 'RJ', id: 33 }, { uf: 'RN', id: 24 },
+  { uf: 'RS', id: 43 }, { uf: 'RO', id: 11 }, { uf: 'RR', id: 14 }, { uf: 'SC', id: 42 },
+  { uf: 'SP', id: 35 }, { uf: 'SE', id: 28 }, { uf: 'TO', id: 17 },
 ];
+
+type Cidade = {
+  id: number;
+  nome: string;
+};
 
 export default function FinalCTA() {
   const [formData, setFormData] = useState({
@@ -18,12 +28,54 @@ export default function FinalCTA() {
   const [submitted, setSubmitted] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [cities, setCities] = useState<Cidade[]>([]);
+  const [loadingCities, setLoadingCities] = useState(false);
+  const [cityError, setCityError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!formData.state) {
+      setCities([]);
+      setCityError(null);
+      return;
+    }
+
+    const controller = new AbortController();
+    const loadCities = async () => {
+      setLoadingCities(true);
+      setCityError(null);
+
+      try {
+        const state = ESTADOS_BRASIL.find((estado) => estado.uf === formData.state);
+        const response = await fetch(
+          `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state?.id ?? formData.state}/municipios`,
+          { signal: controller.signal },
+        );
+
+        if (!response.ok) {
+          throw new Error('Não foi possível carregar as cidades.');
+        }
+
+        const data: Cidade[] = await response.json();
+        setCities(data.map((city) => ({ id: city.id, nome: city.nome })).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR')));
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+        setCities([]);
+        setCityError('Não foi possível carregar as cidades. Selecione o estado novamente.');
+      } finally {
+        if (!controller.signal.aborted) setLoadingCities(false);
+      }
+    };
+
+    loadCities();
+    return () => controller.abort();
+  }, [formData.state]);
 
   const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, state: e.target.value });
+    setFormData({ ...formData, state: e.target.value, city: '' });
+    setCities([]);
   };
 
-  const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData({ ...formData, city: e.target.value });
   };
 
@@ -318,9 +370,9 @@ export default function FinalCTA() {
                         style={{ borderColor: 'var(--color-border)', fontFamily: 'var(--font-body)' }}
                       >
                         <option value="">Selecione o estado</option>
-                        {ESTADOS_BRASIL.map((uf) => (
-                          <option key={uf} value={uf}>
-                            {uf}
+                        {ESTADOS_BRASIL.map((estado) => (
+                          <option key={estado.uf} value={estado.uf}>
+                            {estado.uf}
                           </option>
                         ))}
                       </select>
@@ -338,16 +390,35 @@ export default function FinalCTA() {
                       >
                         Cidade
                       </label>
-                      <input
-                        type="text"
+                      <select
                         required
-                        maxLength={120}
                         value={formData.city}
                         onChange={handleCityChange}
+                        disabled={!formData.state || loadingCities}
                         className="w-full px-4 py-3 rounded-lg border text-sm transition-all duration-200 focus:outline-none focus:ring-2"
                         style={{ borderColor: 'var(--color-border)', fontFamily: 'var(--font-body)' }}
-                        placeholder="Digite sua cidade"
-                      />
+                      >
+                        <option value="">
+                          {!formData.state
+                            ? 'Selecione o estado primeiro'
+                            : loadingCities
+                              ? 'Carregando cidades...'
+                              : 'Selecione a cidade'}
+                        </option>
+                        {cities.map((city) => (
+                          <option key={city.id} value={city.nome}>
+                            {city.nome}
+                          </option>
+                        ))}
+                      </select>
+                      {cityError && (
+                        <p
+                          className="mt-1.5 text-xs"
+                          style={{ color: '#B91C1C', fontFamily: 'var(--font-body)' }}
+                        >
+                          {cityError}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -360,9 +431,10 @@ export default function FinalCTA() {
                           color: 'var(--color-text)',
                         }}
                       >
-                        O que precisa? (opcional)
+                        O que precisa?
                       </label>
                       <textarea
+                        required
                         maxLength={2000}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
