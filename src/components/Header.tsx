@@ -52,7 +52,7 @@ export default function Header({ solidOnTop = false }: HeaderProps) {
               { label: 'Soluções', href: '/#soluções' },
               { label: 'Sites/Apps', href: '/sites-apps', button: true },
               { label: 'Benefícios', href: '/#benefícios' },
-              { label: 'Depoimentos', href: '/#depoimentos' },
+              { label: 'Como funciona', href: '/#como-funciona' },
               { label: 'FAQ', href: '/#faq' },
             ].map((item) => (
               <a
@@ -120,7 +120,7 @@ export default function Header({ solidOnTop = false }: HeaderProps) {
                 { label: 'Soluções', href: '/#soluções' },
                 { label: 'Sites/Apps', href: '/sites-apps', button: true },
                 { label: 'Benefícios', href: '/#benefícios' },
-                { label: 'Depoimentos', href: '/#depoimentos' },
+                { label: 'Como funciona', href: '/#como-funciona' },
                 { label: 'FAQ', href: '/#faq' },
               ].map((item) => (
                 <a

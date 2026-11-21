@@ -138,7 +138,6 @@ export default function FinalCTA() {
                   'Demonstração 100% gratuita e sem compromisso',
                   'Orçamento personalizado em até 24h',
                   'Suporte dedicado do início ao fim',
-                  'Garantia de satisfação ou seu dinheiro de volta',
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div

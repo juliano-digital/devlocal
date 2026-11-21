@@ -89,32 +89,27 @@ export default function Hero() {
             </a>
           </div>
 
-          {/* Trust indicators */}
+          {/* Engagement indicators */}
           <div className="gsap-fade-up mt-12 flex flex-wrap items-center gap-6">
             <div className="flex items-center gap-2">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 rounded-full border-2 border-white/20 flex items-center justify-center text-xs font-bold"
-                    style={{ backgroundColor: `hsl(${i * 60}, 50%, 40%)` }}
-                  >
-                    {['M', 'J', 'A', 'R'][i - 1]}
-                  </div>
-                ))}
+              <div className="w-8 h-8 rounded-full border border-white/20 bg-white/10 flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+                </svg>
               </div>
               <span className="text-sm text-white/70" style={{ fontFamily: 'var(--font-body)' }}>
-                +150 negócios atendidos
+                Atendimento direto
               </span>
             </div>
             <div className="flex items-center gap-1">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="var(--color-secondary)" stroke="none">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              <div className="w-8 h-8 rounded-full border border-white/20 bg-white/10 flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="m8 12 2.5 2.5L16 9" />
                 </svg>
-              ))}
+              </div>
               <span className="text-sm text-white/70 ml-1" style={{ fontFamily: 'var(--font-body)' }}>
-                4.9/5 avaliação
+                Projeto sob medida
               </span>
             </div>
           </div>

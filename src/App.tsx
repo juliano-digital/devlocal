@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Benefits from './components/Benefits';
 import Services from './components/Services';
-import SocialProof from './components/SocialProof';
+import Engagement from './components/Engagement';
 import SitesApps from './components/SitesApps';
 import FAQ from './components/FAQ';
 import FinalCTA from './components/FinalCTA';
@@ -88,7 +88,7 @@ function HomePage() {
       <Hero />
       <Benefits />
       <Services />
-      <SocialProof />
+      <Engagement />
       <FAQ />
       <FinalCTA />
       <Footer />
